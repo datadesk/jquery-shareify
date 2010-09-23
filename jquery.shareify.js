@@ -36,8 +36,18 @@
             var html = "";
             switch(share_type){
                 case 'twitter':
-                    html = twitter_html.replace("{message}", message);
-                    html = html.replace("{share_url}", url);
+                    $.ajax({
+                        url: "http://urls.api.twitter.com/1/urls/count.json?url="+ url +"&callback=?",
+                        dataType: 'json',
+                        success: function(data) {
+                            var count = data.count;
+                            html = twitter_html.replace("{message}", message);
+                            html = html.replace("{share_url}", url);
+                            html = html.replace("{share_count}", count);
+                            $this.html(html);
+                        }
+                    });
+
                     break;
                 case 'facebook':
                     html = facebook_html.replace("{share_url}", share_url);
@@ -45,7 +55,6 @@
                 default:
                     html = "";
             }
-            $this.html(html);
 
             $this.css({
                 textAlign: 'center',
