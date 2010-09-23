@@ -12,26 +12,44 @@
             "</a>",
         ].join("");
 
+        var facebook_html = [
+            "<a href='http://www.facebook.com/sharer.php?u={share_url}&src=sp' target='_blank'>",
+                "<div class='shareify_div'>",
+                    "Facebook this",
+                "</div>",
+                "<div class='shareify_count'>",
+                    "{share_count}",
+                "</div>",
+            "</a>",
+        ].join("");
+
+        var count_up = function() {
+            var eso = $(this);
+            var count_div = $($(eso.children()[0]).children()[1]);
+            if(!count_div.data("has_clicked")) {
+                var count = count_div.html();
+                if(count)
+                    count = parseInt(count) + 1;
+                else
+                    count = 1;
+                count_div.html(count);
+                count_div.data("has_clicked", true);
+            }
+        }
+
         var document_url = document.location.href;
 
         return this.each(function() {
             var $this = $(this);
             var opts = options || {};
 
-            var json = this.innerHTML.substr(this.innerHTML.indexOf("<!--")+4);
-            json = json.substr(0,json.indexOf("-->"));
-            //This is unsafe, so for the love of God, only use this plugin on
-            //something you've written yourself. Do not fill the div's JSON with
-            //user-generated content.
-            json = json ? eval("(" + json + ")") : {};
-
             /* 
              * Tries to set the options from the div JSON. Will default to options {} passed in or null.
              */
-            var twitter_nick = json.twitter_nick || opts.twitter_nick || null;
-            var share_type = json.share_type || opts.share_type || null;
-            var url = json.share_url || opts.share_url || document_url || null;
-            var message = json.message || opts.messsage || null;
+            var twitter_nick = $this.attr("twitter_nick") || opts.twitter_nick || "";
+            var share_type = $this.attr("share_type") || opts.share_type || null;
+            var url = $this.attr("share_url") || opts.share_url || document_url || null;
+            var message = $this.attr("json.message") || opts.messsage || "";
 
             var html = "";
             switch(share_type){
@@ -40,7 +58,9 @@
                         url: "http://urls.api.twitter.com/1/urls/count.json?url="+ url +"&callback=?",
                         dataType: 'json',
                         success: function(data) {
-                            var count = data.count;
+                            var count = 0;
+                            if(data)
+                                count = data.count || 0;
                             html = twitter_html.replace("{message}", message);
                             html = html.replace("{share_url}", url);
                             html = html.replace("{share_count}", count);
@@ -50,7 +70,20 @@
 
                     break;
                 case 'facebook':
-                    html = facebook_html.replace("{share_url}", share_url);
+                    url = escape(url);
+                    message = escape(message);
+                    $.ajax({
+                        url: "http://api.facebook.com/restserver.php?method=links.getStats&urls=" + url + "&format=json&callback=?",
+                        dataType: 'json',
+                        success: function(data) {
+                            var count = 0;
+                            if(data)
+                                count = data[0].share_count || 0;
+                            html = facebook_html.replace("{share_url}", url);
+                            html = html.replace("{share_count}", count);
+                            $this.html(html);
+                        }
+                    });
                     break;
                 default:
                     html = "";
@@ -63,26 +96,8 @@
                 color: '#fff'
             });
 
+            $this.click(count_up);
+
         });
     };
 })( jQuery );
-
-
-/*
-$.ajax({
-    url: "http://urls.api.twitter.com/1/urls/count.json?url="+ url +"&callback=?",
-    dataType: 'json',
-    success: function(data) {
-        console.log(data);
-    }
-});
-
-$.ajax({
-    url: "http://api.facebook.com/restserver.php?method=links.getStats&urls=" + url + "http://projects.latimes.com/value-added/&format=json&callback=?",
-    dataType: 'json',
-    success: function(data) {
-        console.log(data);
-    }
-});*/
-
-
