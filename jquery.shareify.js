@@ -1,6 +1,29 @@
-(function( $ ){
-    $.fn.shareify = function(options) {
+shareifyHandlers = {
+    twitter: {
+        /* We have to hash some global handlers so that
+         * we don't constantly redefine the handler in the 
+         * $.each loop in the shareify function.
+         */
+        handlers: {},
+        set: function(k, f) {
+            var l = k.length;
+            if(k[l-1] != '/'){ k=k+'/'; }
+            if(k.indexOf('http://') != 0) { k='http://'+k; }
+            shareifyHandlers.twitter.handlers[k] = f;
+        },
+        get: function(k) {
+            return shareifyHandlers.twitter.handlers[k];
+        },
+        rcv: function(data) {
+            shareifyHandlers.twitter.get(data.url)(data);
+        }
+    }
 
+};
+ 
+(function( $ ){
+
+    $.fn.shareify = function(options) {
         var twitter_html = [
             "<a href='http://twitter.com/home?status={message} {share_url}' target='_blank'>",
                 "<div class='shareify_div'>",
@@ -54,29 +77,30 @@
             if(!share_type)
                 return false;
 
-            var html = "";
             switch(share_type){
                 case 'twitter':
+                    shareifyHandlers.twitter.set(url, function(data) {
+                        var html = "";
+                        var count = 0;
+                        if(data)
+                            count = data.count || 0;
+                        html = twitter_html.replace("{message}", message);
+                        html = html.replace("{share_url}", url);
+                        html = html.replace("{share_count}", count);
+                        $this.html(html);
+                    });
                     $.ajax({
-                        url: ["http://urls.api.twitter.com/1/urls/count.json?url=", url, "&callback=?"].join(""),
-                        dataType: 'json',
-                        success: function(data) {
-                            var count = 0;
-                            if(data)
-                                count = data.count || 0;
-                            html = twitter_html.replace("{message}", message);
-                            html = html.replace("{share_url}", url);
-                            html = html.replace("{share_count}", count);
-                            $this.html(html);
-                        }
+                        url: ["http://urls.api.twitter.com/1/urls/count.json?url=", url].join(""),
+                        dataType: 'jsonp',
+                        jsonpCallback: "shareifyHandlers.twitter.rcv",
                     });
                     break;
                 case 'facebook':
+                    var html = ""
                     url = escape(url);
-                    $.ajax({
-                        url: ["http://api.facebook.com/restserver.php?method=links.getStats&urls=", url, "&format=json&callback=?"].join(""),
-                        dataType: 'json',
-                        success: function(data) {
+                    $.getJSON(
+                        ["http://api.facebook.com/restserver.php?method=links.getStats&urls=", url, "&format=json&callback=?"].join(""),
+                        function(data) {
                             var count = 0;
                             if(data)
                                 count = data[0].share_count || 0;
@@ -84,10 +108,10 @@
                             html = html.replace("{share_count}", count);
                             $this.html(html);
                         }
-                    });
+                    );
                     break;
                 default:
-                    html = "";
+                    break;
             }
 
             $this.css({
