@@ -35,7 +35,7 @@
                 count_div.html(count);
                 count_div.data("has_clicked", true);
             }
-        }
+        };
 
         var document_url = document.location.href;
 
@@ -48,14 +48,17 @@
              */
             var twitter_nick = $this.attr("twitter_nick") || opts.twitter_nick || "";
             var share_type = $this.attr("share_type") || opts.share_type || null;
-            var url = $this.attr("share_url") || opts.share_url || document_url || null;
-            var message = $this.attr("json.message") || opts.messsage || "";
+            var url = $this.attr("share_url") || opts.share_url || document_url || "";
+            var message = $this.attr("message") || opts.messsage || "";
+
+            if(!share_type)
+                return false;
 
             var html = "";
             switch(share_type){
                 case 'twitter':
                     $.ajax({
-                        url: "http://urls.api.twitter.com/1/urls/count.json?url="+ url +"&callback=?",
+                        url: ["http://urls.api.twitter.com/1/urls/count.json?url=", url, "&callback=?"].join(""),
                         dataType: 'json',
                         success: function(data) {
                             var count = 0;
@@ -67,13 +70,11 @@
                             $this.html(html);
                         }
                     });
-
                     break;
                 case 'facebook':
                     url = escape(url);
-                    message = escape(message);
                     $.ajax({
-                        url: "http://api.facebook.com/restserver.php?method=links.getStats&urls=" + url + "&format=json&callback=?",
+                        url: ["http://api.facebook.com/restserver.php?method=links.getStats&urls=", url, "&format=json&callback=?"].join(""),
                         dataType: 'json',
                         success: function(data) {
                             var count = 0;
