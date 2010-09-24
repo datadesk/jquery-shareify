@@ -1,0 +1,32 @@
+<html>
+<head>
+    <title>Share test</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+    <script src="jquery.shareify.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function(){
+            $(".share_button").shareify();
+        });
+    </script>
+    <style type="text/css">
+        .share_button a { color: #fff; text-decoration: none; };
+    </style>
+</head>
+<body>
+    <div class="share_button"
+        style="clear: both; margin-bottom:20px;"
+        share_url="http://github.com/datadesk/jquery-shareify"
+        message="Value-added teachers project from the @latimes"
+        share_type="twitter"
+    >
+    </div>
+
+    <div class="share_button" 
+        style="clear: both; margin-bottom:20px;"
+        share_url="http://github.com/datadesk/jquery-shareify"
+        share_type="facebook"
+    >
+    </div>
+
+</body>
+</html>
