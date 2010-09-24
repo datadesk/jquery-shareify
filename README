@@ -8,4 +8,6 @@
                                           `\___/'
 "Because share-ification is care-ification."
 
-Based on the way Topsy creates share buttons after the document has loaded, Shareify is a way to create custom share buttons for Twitter and Facebook. Built at the LA Times.
+Shareify is a way to create custom share buttons for Twitter and Facebook. Turns specified divs into share buttons for either Twitter or Facebook.
+
+Built at the LA Times datadesk. Questions? email me.
