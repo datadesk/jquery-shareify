@@ -25,7 +25,7 @@ shareifyHandlers = {
 
     $.fn.shareify = function(options) {
         var twitter_html = [
-            "<a href='http://twitter.com/home?status={message} {share_url}' target='_blank'>",
+            "<a title='Share on Twitter' href='http://twitter.com/home?status={message} {share_url}' target='_blank'>",
                 "<div class='shareify_div'>",
                     "<img src='./twitter-16x16.png'/>",
                 "</div>",
@@ -36,7 +36,7 @@ shareifyHandlers = {
         ].join("");
 
         var facebook_html = [
-            "<a href='http://www.facebook.com/sharer.php?u={share_url}&src=sp' target='_blank'>",
+            "<a title='Share on Facebook' href='http://www.facebook.com/sharer.php?u={share_url}&src=sp' target='_blank'>",
                 "<div class='shareify_div'>",
                     "<img src='./facebook-16x16.png'/>",
                 "</div>",
