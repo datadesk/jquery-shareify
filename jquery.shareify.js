@@ -98,6 +98,9 @@ shareifyHandlers = {
                 case 'facebook':
                     var html = ""
                     url = escape(url);
+                    // Thankfully, Facebook doesn't cache the callback name,
+                    // so we can let jQuery deal with handling the callbacks 
+                    // for us.
                     $.getJSON(
                         ["http://api.facebook.com/restserver.php?method=links.getStats&urls=", url, "&format=json&callback=?"].join(""),
                         function(data) {
