@@ -27,7 +27,7 @@ shareifyHandlers = {
         var twitter_html = [
             "<a href='http://twitter.com/home?status={message} {share_url}' target='_blank'>",
                 "<div class='shareify_div'>",
-                    "Tweet this",
+                    "<img src='./twitter-16x16.png'/>",
                 "</div>",
                 "<div class='shareify_count'>",
                     "{share_count}",
@@ -38,7 +38,7 @@ shareifyHandlers = {
         var facebook_html = [
             "<a href='http://www.facebook.com/sharer.php?u={share_url}&src=sp' target='_blank'>",
                 "<div class='shareify_div'>",
-                    "Facebook this",
+                    "<img src='./facebook-16x16.png'/>",
                 "</div>",
                 "<div class='shareify_count'>",
                     "{share_count}",
@@ -118,6 +118,7 @@ shareifyHandlers = {
             }
 
             $this.click(count_up);
+
 
         });
     };
