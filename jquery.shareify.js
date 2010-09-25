@@ -27,7 +27,7 @@ shareifyHandlers = {
         var twitter_html = [
             "<a title='Share on Twitter' href='http://twitter.com/home?status={message} {share_url}' target='_blank'>",
                 "<div class='shareify_div'>",
-                    "<img src='./twitter-16x16.png'/>",
+                    "<img src='./img/twitter-16x16-grayscale.png'/>",
                 "</div>",
                 "<div class='shareify_count'>",
                     "{share_count}",
@@ -38,7 +38,18 @@ shareifyHandlers = {
         var facebook_html = [
             "<a title='Share on Facebook' href='http://www.facebook.com/sharer.php?u={share_url}&src=sp' target='_blank'>",
                 "<div class='shareify_div'>",
-                    "<img src='./facebook-16x16.png'/>",
+                    "<img src='./img/facebook-16x16-grayscale.png'/>",
+                "</div>",
+                "<div class='shareify_count'>",
+                    "{share_count}",
+                "</div>",
+            "</a>",
+        ].join("");
+
+        var facebook_like_html = [
+                '<iframe src="http://www.facebook.com/plugins/like.php?href={share_url}&amp;layout=button_count&amp;show_faces=true&amp;width=0&amp;action=like&amp;colorscheme=dark&amp;height=21" scrolling="no" frameborder="0" style="position: absolute; left: 0; z-index:5; max-width:100px; opacity: 0; display:inline; border:none; overflow:hidden; height:21px; " allowTransparency="true"></iframe>', "<a title='Like on Facebook' target='_blank'>",
+                "<div class='shareify_div'>",
+                    "<img src='./img/facebook-like-16x16.png'/>",
                 "</div>",
                 "<div class='shareify_count'>",
                     "{share_count}",
@@ -110,16 +121,29 @@ shareifyHandlers = {
                             html = facebook_html.replace("{share_url}", url);
                             html = html.replace("{share_count}", count);
                             $this.html(html);
+
+                        }
+                    );
+                    break;
+                case 'facebook_like':
+                    var html = ""
+                    url = escape(url);
+                    $.getJSON(
+                        ["http://api.facebook.com/restserver.php?method=links.getStats&urls=", url, "&format=json&callback=?"].join(""),
+                        function(data) {
+                            var count = 0;
+                            if(data)
+                                count = data[0].total_count || 0;
+                            html = facebook_like_html.replace("{share_url}", url);
+                            html = html.replace("{share_count}", count);
+                            $this.html(html);
                         }
                     );
                     break;
                 default:
                     break;
             }
-
             $this.click(count_up);
-
-
         });
     };
 })( jQuery );
