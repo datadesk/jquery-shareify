@@ -41,9 +41,6 @@ shareifyHandlers = {
                 "<div class='shareify_div'>",
                     "<img src='./img/twitter-16x16-grayscale.png'/>",
                 "</div>",
-                "<div class='shareify_count'>",
-                    "{share_count}",
-                "</div>",
             "</a>",
         ].join("");
 
@@ -52,21 +49,22 @@ shareifyHandlers = {
                 "<div class='shareify_div'>",
                     "<img src='./img/facebook-16x16-grayscale.png'/>",
                 "</div>",
-                "<div class='shareify_count'>",
-                    "{share_count}",
-                "</div>",
             "</a>",
         ].join("");
 
         var facebook_like_html = [
-                '<iframe src="http://www.facebook.com/plugins/like.php?href={share_url}&amp;layout=button_count&amp;show_faces=true&amp;width=0&amp;action=like&amp;colorscheme=dark&amp;height=21" scrolling="no" frameborder="0" style="position: absolute; left: 0; z-index:5; max-width:100px; opacity: 0; display:inline; border:none; overflow:hidden; height:21px; " allowTransparency="true"></iframe>', "<a title='Like on Facebook' target='_blank'>",
+            "<a title='Like on Facebook' target='_blank'>",
+                '<iframe src="http://www.facebook.com/plugins/like.php?href={share_url}&amp;layout=button_count&amp;show_faces=true&amp;width=0&amp;action=like&amp;colorscheme=dark&amp;height=21" scrolling="no" frameborder="0" style="position: absolute; left: 0; z-index:5; max-width:100px; opacity: 0; display:inline; border:none; overflow:hidden; height:21px; " allowTransparency="true"></iframe>',
                 "<div class='shareify_div'>",
                     "<img src='./img/facebook-like-16x16.png'/>",
                 "</div>",
+            "</a>",
+        ].join("");
+
+        var count_html = [
                 "<div class='shareify_count'>",
                     "{share_count}",
                 "</div>",
-            "</a>",
         ].join("");
 
         var count_up = function() {
@@ -107,25 +105,30 @@ shareifyHandlers = {
                     $this.html(html);
                     break;
                 case 'twitter':
+                    var html = "";
+                    html = twitter_html.replace("{message}", message);
+                    html = html.replace("{share_url}", url);
+                    $this.html(html);
+
                     shareifyHandlers.twitter.set(url, function(data) {
-                        var html = "";
                         var count = 0;
                         if(data)
                             count = data.count || 0;
-                        html = twitter_html.replace("{message}", message);
-                        html = html.replace("{share_url}", url);
-                        html = html.replace("{share_count}", count);
-                        $this.html(html);
+                        var a = $($this).children('a');
+                        $(a).append(count_html.replace("{share_count}", count));
                     });
                     $.ajax({
                         url: ["http://urls.api.twitter.com/1/urls/count.json?url=", url].join(""),
                         dataType: 'jsonp',
                         jsonpCallback: "shareifyHandlers.twitter.rcv",
                     });
+                    $this.click(count_up);
                     break;
                 case 'facebook':
-                    var html = ""
                     url = escape(url);
+                    var html = ""
+                    html = facebook_html.replace("{share_url}", url);
+                    $this.html(html);
                     // Thankfully, Facebook doesn't cache the callback name,
                     // so we can let jQuery deal with handling the callbacks 
                     // for us.
@@ -135,32 +138,31 @@ shareifyHandlers = {
                             var count = 0;
                             if(data)
                                 count = data[0].share_count || 0;
-                            html = facebook_html.replace("{share_url}", url);
-                            html = html.replace("{share_count}", count);
-                            $this.html(html);
-
+                            var a = $($this).children('a');
+                            $(a).append(count_html.replace("{share_count}", count));
                         }
                     );
+                    $this.click(count_up);
                     break;
                 case 'facebook_like':
                     var html = ""
                     url = escape(url);
+                    html = facebook_like_html.replace("{share_url}", url);
+                    $this.html(html);
                     $.getJSON(
                         ["http://api.facebook.com/restserver.php?method=links.getStats&urls=", url, "&format=json&callback=?"].join(""),
                         function(data) {
                             var count = 0;
                             if(data)
                                 count = data[0].total_count || 0;
-                            html = facebook_like_html.replace("{share_url}", url);
-                            html = html.replace("{share_count}", count);
-                            $this.html(html);
+                            var a = $($this).children('a');
+                            $(a).append(count_html.replace("{share_count}", count));
                         }
                     );
                     break;
                 default:
                     break;
             }
-            $this.click(count_up);
         });
     };
 })( jQuery );
