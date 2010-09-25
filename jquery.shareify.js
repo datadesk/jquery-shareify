@@ -24,6 +24,18 @@ shareifyHandlers = {
 (function( $ ){
 
     $.fn.shareify = function(options) {
+
+        var permalink_html = [
+            "<a title='Permalink' href='{share_url}' target='_blank'>",
+                "<div class='shareify_div'>",
+                    "<img src='./img/permalink.png'/>",
+                "</div>",
+                "<div class='shareify_count'>",
+                    "Link",
+                "</div>",
+            "</a>"
+        ].join("");
+
         var twitter_html = [
             "<a title='Share on Twitter' href='http://twitter.com/home?status={message} {share_url}' target='_blank'>",
                 "<div class='shareify_div'>",
@@ -89,6 +101,11 @@ shareifyHandlers = {
                 return false;
 
             switch(share_type){
+                case 'permalink':
+                    var html="";
+                    html = permalink_html.replace("{share_url}", url);
+                    $this.html(html);
+                    break;
                 case 'twitter':
                     shareifyHandlers.twitter.set(url, function(data) {
                         var html = "";
