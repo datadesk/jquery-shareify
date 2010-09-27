@@ -56,7 +56,7 @@ shareifyHandlers = {
                 "<div class='shareify_div'>",
                     "<img src='", script_src ,"img/twitter-16x16-grayscale.png'/>",
                 "</div>",
-            "</a>",
+            "</a>"
         ].join("");
 
         var facebook_html = [
@@ -87,10 +87,12 @@ shareifyHandlers = {
             var count_div = $($(eso.children()[0]).children()[1]);
             if(!count_div.data("has_clicked")) {
                 var count = count_div.html();
-                if(count)
-                    count = parseInt(count) + 1;
-                else
+                if(count) {
+                    count = parseInt(count, 10) + 1;
+                }
+                else {
                     count = 1;
+                }
                 count_div.html(count);
                 count_div.data("has_clicked", true);
             }
@@ -109,8 +111,9 @@ shareifyHandlers = {
             var url = $this.attr("share_url") || opts.share_url || document_url || "";
             var message = $this.attr("message") || opts.messsage || "";
 
-            if(!share_type)
+            if(!share_type) {
                 return false;
+            }
 
             switch(share_type){
                 case 'permalink':
@@ -126,8 +129,9 @@ shareifyHandlers = {
 
                     shareifyHandlers.twitter.set(url, function(data) {
                         var count = 0;
-                        if(data)
+                        if(data) {
                             count = data.count || 0;
+                        }
                         var a = $($this).children('a');
                         $(a).append(count_html.replace("{share_count}", count));
                     });
@@ -150,8 +154,9 @@ shareifyHandlers = {
                         ["http://api.facebook.com/restserver.php?method=links.getStats&urls=", url, "&format=json&callback=?"].join(""),
                         function(data) {
                             var count = 0;
-                            if(data)
+                            if(data) {
                                 count = data[0].share_count || 0;
+                            }
                             var a = $($this).children('a');
                             $(a).append(count_html.replace("{share_count}", count));
                         }
@@ -167,8 +172,9 @@ shareifyHandlers = {
                         ["http://api.facebook.com/restserver.php?method=links.getStats&urls=", url, "&format=json&callback=?"].join(""),
                         function(data) {
                             var count = 0;
-                            if(data)
+                            if(data) {
                                 count = data[0].total_count || 0;
+                            }
                             var a = $($this).children('a');
                             $(a).append(count_html.replace("{share_count}", count));
                         }
