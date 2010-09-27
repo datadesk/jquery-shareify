@@ -24,11 +24,26 @@ shareifyHandlers = {
 (function( $ ){
 
     $.fn.shareify = function(options) {
+        var opts = options || {};
+
+
+        var script_src = "";
+        // Search through all of the script tags on the page,
+        // attempt to pull out jquery.shareify's location so
+        // we know where the media files are.
+        $('script').each(function(){
+            var src = $(this).attr('src');
+            if(src && src.indexOf('jquery.shareify') != -1) {
+                var last = src.search(/\/[.-/\w]+.js$/i);
+                script_src = src.substr(0, last+1);
+            }
+        });
+        script_src = script_src || opts.script_src;
 
         var permalink_html = [
             "<a title='Permalink' href='{share_url}' target='_blank'>",
                 "<div class='shareify_div'>",
-                    "<img src='./img/permalink.png'/>",
+                    "<img src='", script_src ,"img/permalink.png'/>",
                 "</div>",
                 "<div class='shareify_count'>",
                     "Link",
@@ -39,7 +54,7 @@ shareifyHandlers = {
         var twitter_html = [
             "<a title='Share on Twitter' href='http://twitter.com/home?status={message} {share_url}' target='_blank'>",
                 "<div class='shareify_div'>",
-                    "<img src='./img/twitter-16x16-grayscale.png'/>",
+                    "<img src='", script_src ,"img/twitter-16x16-grayscale.png'/>",
                 "</div>",
             "</a>",
         ].join("");
@@ -47,7 +62,7 @@ shareifyHandlers = {
         var facebook_html = [
             "<a title='Share on Facebook' href='http://www.facebook.com/sharer.php?u={share_url}&src=sp' target='_blank'>",
                 "<div class='shareify_div'>",
-                    "<img src='./img/facebook-16x16-grayscale.png'/>",
+                    "<img src='", script_src ,"img/facebook-16x16-grayscale.png'/>",
                 "</div>",
             "</a>",
         ].join("");
@@ -56,7 +71,7 @@ shareifyHandlers = {
             "<a title='Like on Facebook' target='_blank'>",
                 '<iframe src="http://www.facebook.com/plugins/like.php?href={share_url}&amp;layout=button_count&amp;show_faces=true&amp;width=0&amp;action=like&amp;colorscheme=dark&amp;height=21" scrolling="no" frameborder="0" style="position: absolute; left: 0; z-index:5; max-width:100px; opacity: 0; display:inline; border:none; overflow:hidden; height:21px; " allowTransparency="true"></iframe>',
                 "<div class='shareify_div'>",
-                    "<img src='./img/facebook-like-16x16.png'/>",
+                    "<img src='", script_src ,"img/facebook-like-16x16.png'/>",
                 "</div>",
             "</a>",
         ].join("");
@@ -85,7 +100,6 @@ shareifyHandlers = {
 
         return this.each(function() {
             var $this = $(this);
-            var opts = options || {};
 
             /* 
              * Tries to set the options from the div JSON. Will default to options {} passed in or null.
