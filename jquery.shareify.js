@@ -8,7 +8,7 @@ shareifyHandlers = {
         set: function(k, f) {
             var l = k.length;
             if(k[l-1] != '/'){ k=k+'/'; }
-            if(k.indexOf('http://') != 0) { k='http://'+k; }
+            if(k.indexOf('http://') !== 0) { k='http://'+k; }
             shareifyHandlers.twitter.handlers[k] = f;
         },
         get: function(k) {
@@ -64,7 +64,7 @@ shareifyHandlers = {
                 "<div class='shareify_div'>",
                     "<img src='", script_src ,"img/facebook-16x16-grayscale.png'/>",
                 "</div>",
-            "</a>",
+            "</a>"
         ].join("");
 
         var facebook_like_html = [
@@ -73,13 +73,13 @@ shareifyHandlers = {
                 "<div class='shareify_div'>",
                     "<img src='", script_src ,"img/facebook-like-16x16.png'/>",
                 "</div>",
-            "</a>",
+            "</a>"
         ].join("");
 
         var count_html = [
                 "<div class='shareify_count'>",
                     "{share_count}",
-                "</div>",
+                "</div>"
         ].join("");
 
         var count_up = function() {
@@ -134,7 +134,7 @@ shareifyHandlers = {
                     $.ajax({
                         url: ["http://urls.api.twitter.com/1/urls/count.json?url=", url].join(""),
                         dataType: 'jsonp',
-                        jsonpCallback: "shareifyHandlers.twitter.rcv",
+                        jsonpCallback: "shareifyHandlers.twitter.rcv"
                     });
                     $this.click(count_up);
                     break;
