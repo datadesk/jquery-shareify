@@ -27,7 +27,6 @@ Throw this where you like in your body.
     message="Ohhh, Lindsay"
     share_type="twitter">
 </div>
-
 <div class="share_button" 
     style="clear: both; margin-bottom:20px;"
     share_url="http://projects.latimes.com/value-added/"
