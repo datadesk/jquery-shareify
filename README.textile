@@ -26,8 +26,8 @@ Throw this where you like in your body.
     share_url="http://latimesblogs.latimes.com/lanow/2010/09/lindsay-lohan-was-treated-too-harshly-and-is-entitled-to-bail-attorney-shawn-chapman-holley-says.html"
     message="Ohhh, Lindsay"
     share_type="twitter">
-</div>
-<div class="share_button" 
+</div></code></pre>
+<pre><code><div class="share_button" 
     style="clear: both; margin-bottom:20px;"
     share_url="http://projects.latimes.com/value-added/"
     share_type="facebook">
