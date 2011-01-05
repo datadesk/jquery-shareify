@@ -10,6 +10,8 @@
 
 Shareify is a way to create your own share buttons for Twitter and Facebook by turning specified divs into custom buttons.
 
+You can see an example "here":http://documents.latimes.com/measures-of-effective-teaching/.
+
 h3. Installation
 
 h4. 01. Import the query libraries
