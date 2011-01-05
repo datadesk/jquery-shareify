@@ -6,7 +6,7 @@
 `\____)(_) (_)`\__,_)(_)  `\____)(_)(_)   `\__, |
                                           ( )_| |
                                           `\___/'</code></pre>
-"Because share-ification is care-ification."
+*"Because share-ification is care-ification."*
 
 Shareify is a way to create custom share buttons for Twitter and Facebook. Turns specified divs into share buttons for either Twitter or Facebook.
 
