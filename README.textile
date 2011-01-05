@@ -27,7 +27,7 @@ First Twitter.
     message="jQuery.shareify: Because shareification is careification."
     share_type="twitter">
 </div></code></pre>
-The Facebook.
+Then Facebook.
 <pre><code><div class="share_button" 
     style="clear: both; margin-bottom:20px;"
     share_url="http://projects.latimes.com/value-added/"
