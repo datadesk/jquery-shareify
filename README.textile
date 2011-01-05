@@ -20,13 +20,14 @@ Up there with the rest of your imports in the head.
 
 h4. 02. Create your custom styled divs
 
-Throw this where you like in your body.
+First Twitter.
 <pre><code><div class="share_button"
     style="clear: both; margin-bottom:20px;"
     share_url="http://github.com/datadesk/jquery-shareify"
     message="jQuery.shareify: Because shareification is careification."
     share_type="twitter">
 </div></code></pre>
+The Facebook.
 <pre><code><div class="share_button" 
     style="clear: both; margin-bottom:20px;"
     share_url="http://projects.latimes.com/value-added/"
