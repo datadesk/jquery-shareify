@@ -14,13 +14,13 @@ h3. Installation
 
 h4. 01. Import the query libraries
 
-Up there with the rest of your imports in the <head>
+Up there with the rest of your imports in the head.
 <pre><code><script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
 <script src="jquery.shareify.js" type="text/javascript"></script></code></pre>
 
 h4. 02. Create your custom styled divs
 
-Throw this where you like in your <body>
+Throw this where you like in your body.
 <pre><code><div class="share_button"
     style="clear: both; margin-bottom:20px;"
     share_url="http://latimesblogs.latimes.com/lanow/2010/09/lindsay-lohan-was-treated-too-harshly-and-is-entitled-to-bail-attorney-shawn-chapman-holley-says.html"
@@ -36,7 +36,7 @@ Throw this where you like in your <body>
 
 h4. 03. Give them some styles
 
-Here's some CSS you could put in your <head>
+Here's some CSS you could put in your head.
 <pre><code><style type="text/css">
 .share_button { 
     float:left;
