@@ -1,0 +1,13 @@
+<pre<code> ___    _                              ___       
+(  _`\ ( )                        _  /'___)      
+| (_(_)| |__     _ _  _ __   __  (_)| (__  _   _ 
+`\__ \ |  _ `\ /'_` )( '__)/'__`\| || ,__)( ) ( )
+( )_) || | | |( (_| || |  (  ___/| || |   | (_) |
+`\____)(_) (_)`\__,_)(_)  `\____)(_)(_)   `\__, |
+                                          ( )_| |
+                                          `\___/'</code></pre>
+"Because share-ification is care-ification."
+
+Shareify is a way to create custom share buttons for Twitter and Facebook. Turns specified divs into share buttons for either Twitter or Facebook.
+
+Built at the LA Times datadesk. Questions? email me.
