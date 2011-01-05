@@ -60,7 +60,7 @@ h4. 03. Give them some styles
     padding: 4px 5px 4px 3px;
     min-width:20px;
 }
-</style></code><pre>
+</style></code></pre>
 
 h4. 04. Fire it all off in your document.ready function
 
