@@ -84,7 +84,7 @@ shareifyHandlers = {
             var twitter_nick = $this.attr("twitter_nick") || opts.twitter_nick || "";
             var share_type = $this.attr("share_type") || opts.share_type || null;
             var url = $this.attr("share_url") || opts.share_url || document_url || "";
-            var message = $this.attr("message") || opts.messsage || "";
+            var message = $this.attr("message") || opts.message || "";
 
             if(!share_type) {
                 return false;
