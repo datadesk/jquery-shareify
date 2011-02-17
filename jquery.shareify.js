@@ -26,51 +26,40 @@ shareifyHandlers = {
     $.fn.shareify = function(options) {
         var opts = options || {};
         
+
+        var permalink_wrap = "<a class=\"shareify_link\" title=\"Permalink\" href=\"{share_url}\" target=\"_blank\"></a>";
         var permalink_html = [
-            "<a title='Permalink' href='{share_url}' target='_blank'>",
-                "<div class='shareify_div'>",
-                    "<img src='", opts.image_dir,"permalink.png'/>",
-                "</div>",
-                "<div class='shareify_count'>",
-                    "Link",
-                "</div>",
-            "</a>"
+            "<div class=\"shareify_div\">",
+                "<img src=\"", opts.image_dir, "permalink.png\"/>",
+            "</div>",
+            "<div class=\"shareify_count\">",
+                "Link",
+            "</div>",
         ].join("");
 
+        var twitter_wrap =  "<a class=\"shareify_link\" title=\"Share on Twitter\" href=\"http://twitter.com/share?url={share_url}&text={message}&via={twitter_nick}\" target=\"_blank\" onclick=\"window.open(this.href); return false\"></a>";
         var twitter_html = [
-            "<a title='Share on Twitter' href='http://twitter.com/home?status={message} {share_url}' target='_blank'>",
-                "<div class='shareify_div'>",
-                    "<img src='", opts.image_dir, "twitter-16x16-grayscale.png'/>",
-                "</div>",
-            "</a>"
+            "<div class=\"shareify_div\">",
+                "<img src=\"", opts.image_dir, "twitter-16x16-grayscale.png\" />",
+            "</div>",
         ].join("");
 
+        var facebook_wrap = "<a class=\"shareify_link\" title=\"Share on Facebook\" href=\"http://www.facebook.com/sharer.php?u={share_url}&src=sp\" target=\"_blank\" onclick=\"window.open(this.href); return false\"></a>";
         var facebook_html = [
-            "<a title='Share on Facebook' href='http://www.facebook.com/sharer.php?u={share_url}&src=sp' target='_blank'>",
-                "<div class='shareify_div'>",
-                    "<img src='", opts.image_dir,"facebook-16x16-grayscale.png'/>",
-                "</div>",
-            "</a>"
-        ].join("");
-
-        var facebook_like_html = [
-            "<a title='Like on Facebook' target='_blank'>",
-                '<iframe src="http://www.facebook.com/plugins/like.php?href={share_url}&amp;layout=button_count&amp;show_faces=true&amp;width=0&amp;action=like&amp;colorscheme=dark&amp;height=21" scrolling="no" frameborder="0" style="position: absolute; left: 0; z-index:5; max-width:100px; opacity: 0; display:inline; border:none; overflow:hidden; height:21px; " allowTransparency="true"></iframe>',
-                "<div class='shareify_div'>",
-                    "<img src='", opts.image_dir,"facebook-like-16x16.png'/>",
-                "</div>",
-            "</a>"
+            "<div class=\"shareify_div\">",
+                "<img src=\"", opts.image_dir,"facebook-16x16-grayscale.png\" />",
+            "</div>",
         ].join("");
 
         var count_html = [
-                "<div class='shareify_count'>",
-                    "{share_count}",
-                "</div>"
+            "<div class=\"shareify_count\">",
+                "<span class=\"shareify_count_number\">{share_count}</span>",
+            "</div>"
         ].join("");
 
-        var count_up = function() {
+        var count_up = function(e) {
             var eso = $(this);
-            var count_div = $($(eso.children()[0]).children()[1]);
+            var count_div = $(".shareify_count_number", eso);
             if(!count_div.data("has_clicked")) {
                 var count = count_div.html();
                 if(count) {
@@ -103,23 +92,26 @@ shareifyHandlers = {
 
             switch(share_type){
                 case 'permalink':
-                    var html="";
-                    html = permalink_html.replace("{share_url}", url);
+                    var html= permalink_html;
+                    var wrap_html = permalink_wrap.replace("{share_url}", url);
+                    $this.wrap(wrap_html);
                     $this.html(html);
                     break;
                 case 'twitter':
-                    var html = "";
-                    html = twitter_html.replace("{message}", message);
-                    html = html.replace("{share_url}", url);
+                    var html = twitter_html;
+                    var wrap_html = twitter_wrap.replace("{message}", encodeURIComponent(message));
+                    wrap_html = wrap_html.replace("{share_url}", escape(url));
+                    wrap_html = wrap_html.replace("{twitter_nick}", twitter_nick);
+                    $this.wrap(wrap_html);
                     $this.html(html);
+
 
                     shareifyHandlers.twitter.set(url, function(data) {
                         var count = 0;
                         if(data) {
                             count = data.count || 0;
                         }
-                        var a = $($this).children('a');
-                        $(a).append(count_html.replace("{share_count}", count));
+                        $this.append(count_html.replace("{share_count}", count));
                     });
                     $.ajax({
                         url: ["http://urls.api.twitter.com/1/urls/count.json?url=", url].join(""),
@@ -130,8 +122,9 @@ shareifyHandlers = {
                     break;
                 case 'facebook':
                     url = escape(url);
-                    var html = ""
-                    html = facebook_html.replace("{share_url}", url);
+                    var html = facebook_html;
+                    var wrap_html = facebook_wrap.replace("{share_url}", url);
+                    $this.wrap(wrap_html);
                     $this.html(html);
                     // Thankfully, Facebook doesn't cache the callback name,
                     // so we can let jQuery deal with handling the callbacks 
@@ -141,30 +134,12 @@ shareifyHandlers = {
                         function(data) {
                             var count = 0;
                             if(data) {
-                                count = data[0].share_count || 0;
+                                count = data[0].total_count || 0;
                             }
-                            var a = $($this).children('a');
-                            $(a).append(count_html.replace("{share_count}", count));
+                            $this.append(count_html.replace("{share_count}", count));
                         }
                     );
                     $this.click(count_up);
-                    break;
-                case 'facebook_like':
-                    var html = ""
-                    url = escape(url);
-                    html = facebook_like_html.replace("{share_url}", url);
-                    $this.html(html);
-                    $.getJSON(
-                        ["http://api.facebook.com/restserver.php?method=links.getStats&urls=", url, "&format=json&callback=?"].join(""),
-                        function(data) {
-                            var count = 0;
-                            if(data) {
-                                count = data[0].total_count || 0;
-                            }
-                            var a = $($this).children('a');
-                            $(a).append(count_html.replace("{share_count}", count));
-                        }
-                    );
                     break;
                 default:
                     break;
