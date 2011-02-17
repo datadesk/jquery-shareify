@@ -7,7 +7,7 @@ shareifyHandlers = {
         handlers: {},
         set: function(k, f) {
             var l = k.length;
-            if(k.charAt(l-1) != '/'){k=k+'/';}
+            if(k.charAt(l-1) != '/' && k.indexOf('?') == -1){k=k+'/';}
             if(k.indexOf('http://') !== 0) { k='http://'+k; }
             shareifyHandlers.twitter.handlers[k] = f;
         },
