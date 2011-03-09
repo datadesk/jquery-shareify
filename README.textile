@@ -43,27 +43,35 @@ Here's some CSS you could put in your head.
 .share_button { 
     float:left;
     display:block;
-    padding:2px;
     text-align: center;
-    font-family: Georgia,Serif;
-    font-size: .9em;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-    border: 1px solid #CCC;
-    background: #333; 
     position: relative;
+    margin-right:10px;
+    min-width:50px;
+    height:20px;
+    cursor: pointer;
 }
-.share_button a { color: #fff; text-decoration: none; }
+.share_button a { 
+    text-decoration: none;
+}
 .shareify_div { 
-    float:left; 
+    float:left;
     padding: 4px 5px 4px 3px;
 }
-.shareify_div img { border:0; padding:0; margin:0; width:16px; height:16px; }
+.shareify_div img { 
+    border:0;
+    padding:0;
+    margin:0;
+    width:16px;
+    height:16px;
+}
 .shareify_count { 
-    font-size: .9em;
+    font-size: 14px;
     float: left;
-    padding: 4px 5px 4px 3px;
+    padding: 4px 6px;
     min-width:20px;
+}
+.no_underline a {
+    text-decoration:none;
 }
 </style></code></pre>
 

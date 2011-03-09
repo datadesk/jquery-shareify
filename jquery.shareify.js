@@ -18,7 +18,6 @@ shareifyHandlers = {
             shareifyHandlers.twitter.get(data.url)(data);
         }
     }
-
 };
  
 (function( $ ){
@@ -26,7 +25,6 @@ shareifyHandlers = {
     $.fn.shareify = function(options) {
         var opts = options || {};
         
-
         var permalink_wrap = "<a class=\"shareify_link\" title=\"Permalink\" href=\"{share_url}\" target=\"_blank\"></a>";
         var permalink_html = [
             "<div class=\"shareify_div\">",
@@ -37,24 +35,24 @@ shareifyHandlers = {
             "</div>",
         ].join("");
 
-        var twitter_wrap =  "<a class=\"shareify_link\" title=\"Share on Twitter\" href=\"http://twitter.com/share?url={share_url}&text={message}&via={twitter_nick}\" target=\"_blank\" onclick=\"window.open(this.href); return false\"></a>";
+        var twitter_wrap =  "<a title=\"Share on Twitter\" href=\"http://twitter.com/share?url={share_url}&text={message}&via={twitter_nick}\" target=\"_blank\" onclick=\"window.open(this.href); return false\"></a>";
         var twitter_html = [
             "<div class=\"shareify_div\">",
-                "<img src=\"", opts.image_dir, "twitter-16x16-grayscale.png\" />",
+                "<img style=\"width:23px; height:16px;\" src=\"", opts.image_dir, "twitter_bird.jpg\" />",
             "</div>",
         ].join("");
 
-        var facebook_wrap = "<a class=\"shareify_link\" title=\"Share on Facebook\" href=\"http://www.facebook.com/sharer.php?u={share_url}&src=sp\" target=\"_blank\" onclick=\"window.open(this.href); return false\"></a>";
+        var facebook_wrap = "<a title=\"Share on Facebook\" href=\"http://www.facebook.com/sharer.php?u={share_url}&src=sp\" target=\"_blank\" onclick=\"window.open(this.href); return false\"></a>";
         var facebook_html = [
             "<div class=\"shareify_div\">",
-                "<img src=\"", opts.image_dir,"facebook-16x16-grayscale.png\" />",
+                "<img src=\"", opts.image_dir,"facebook-16x16.png\" />",
             "</div>",
         ].join("");
 
         var count_html = [
-            "<div class=\"shareify_count\">",
-                "<span class=\"shareify_count_number\">{share_count}</span>",
-            "</div>"
+                "<div class=\"shareify_count\">",
+                    "(<span class=\"shareify_count_number\">{share_count}</span>)",
+                "</div>"
         ].join("");
 
         var count_up = function(e) {
@@ -85,7 +83,6 @@ shareifyHandlers = {
             var share_type = $this.attr("share_type") || opts.share_type || null;
             var url = $this.attr("share_url") || opts.share_url || document_url || "";
             var message = $this.attr("message") || opts.message || "";
-
             if(!share_type) {
                 return false;
             }
@@ -111,6 +108,7 @@ shareifyHandlers = {
                         if(data) {
                             count = data.count || 0;
                         }
+                        //var a = $($this).parent('a');
                         $this.append(count_html.replace("{share_count}", count));
                     });
                     $.ajax({
@@ -136,6 +134,7 @@ shareifyHandlers = {
                             if(data) {
                                 count = data[0].total_count || 0;
                             }
+                            //var a = $($this).parent('a');
                             $this.append(count_html.replace("{share_count}", count));
                         }
                     );

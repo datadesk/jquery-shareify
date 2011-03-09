@@ -7,10 +7,6 @@
         $(function(){
             $(".share_button").shareify({
                 'image_dir': 'img/'
-            }).hover(function() {
-                $(this).css({background: '#555'});
-            },function(){
-                $(this).css({background: '#333'});
             });
         });
     </script>
@@ -18,102 +14,107 @@
         .share_button { 
             float:left;
             display:block;
-            padding:2px;
             text-align: center;
-            font-family: Georgia,Serif;
-            font-size: .9em;
-            -moz-border-radius: 5px;
-            border-radius: 5px;
-            border: 1px solid #CCC;
-            background: #333; 
             position: relative;
+            margin-right:10px;
+            min-width:50px;
+            height:20px;
+            cursor: pointer;
         }
-        .shareify_link {
-            color: #fff;
+        .share_button a { 
             text-decoration: none;
         }
         .shareify_div { 
-            float:left; 
+            float:left;
             padding: 4px 5px 4px 3px;
         }
-        .shareify_div img { border:0; padding:0; margin:0; width:16px; height:16px; }
+        .shareify_div img { 
+            border:0;
+            padding:0;
+            margin:0;
+            width:16px;
+            height:16px;
+        }
         .shareify_count { 
-            font-size: .9em;
+            font-size: 14px;
             float: left;
-            padding: 4px 5px 4px 3px;
+            padding: 4px 6px;
             min-width:20px;
+        }
+        .no_underline a {
+            text-decoration:none;
         }
     </style>
 </head>
 <body>
+    <div class="no_underline">
+        <div style="display:block; clear:both;">
+        <h2>Twitter</h2>
+            <div class="share_button"
+                style="clear: both; margin-bottom:20px;"
+                share_url="http://github.com/datadesk/jquery-shareify"
+                message="jQuery.shareify: Because shareification is careification."
+                share_type="twitter"
+                twitter_nick="twitter_nick"
+            >
+            </div>
 
-    <div style="display:block; clear:both;">
-    <h2>Twitter</h2>
-        <div class="share_button"
-            style="clear: both; margin-bottom:20px;"
-            share_url="http://github.com/datadesk/jquery-shareify"
-            message="jQuery.shareify: Because shareification is careification."
-            share_type="twitter"
-            twitter_nick="twitter_nick"
-        >
+            <div class="share_button"
+                style="clear: both; margin-bottom:20px;"
+                share_url="http://latimesblogs.latimes.com/lanow/2010/09/lindsay-lohan-was-treated-too-harshly-and-is-entitled-to-bail-attorney-shawn-chapman-holley-says.html"
+                message="Ohhh, Lindsay"
+                share_type="twitter"
+                twitter_nick="twitter_nick"
+            >
+            </div>
+
+            <div class="share_button" 
+                style="clear: both; margin-bottom:20px;"
+                share_url="http://developers.facebook.com/docs/reference/plugins/like"
+                share_type="twitter"
+                twitter_nick="twitter_nick"
+            >
+            </div>
+
+            <div class="share_button"
+                style="clear: both; margin-bottom:20px;"
+                share_url="http://projects.latimes.com/value-added/"
+                message="Value-added teacher evaluations"
+                share_type="twitter"
+                twitter_nick="twitter_nick"
+            >
+            </div>
         </div>
 
-        <div class="share_button"
-            style="clear: both; margin-bottom:20px;"
-            share_url="http://latimesblogs.latimes.com/lanow/2010/09/lindsay-lohan-was-treated-too-harshly-and-is-entitled-to-bail-attorney-shawn-chapman-holley-says.html"
-            message="Ohhh, Lindsay"
-            share_type="twitter"
-            twitter_nick="twitter_nick"
-        >
+        <div style="display:block; clear:both;">
+        <h2>Facebook Share</h2>
+
+            <div class="share_button" 
+                style="clear: both; margin-bottom:20px;"
+                share_url="http://projects.latimes.com/value-added/"
+                share_type="facebook"
+            >
+            </div>
+
+            <div class="share_button" 
+                style="clear: both; margin-bottom:20px;"
+                share_url="http://developers.facebook.com/docs/reference/plugins/like"
+                share_type="facebook"
+            >
+            </div>
+
         </div>
 
-        <div class="share_button" 
-            style="clear: both; margin-bottom:20px;"
-            share_url="http://developers.facebook.com/docs/reference/plugins/like"
-            share_type="twitter"
-            twitter_nick="twitter_nick"
-        >
-        </div>
+        <div style="display:block; clear:both;">
+        <h2>Link</h2>
 
-        <div class="share_button"
-            style="clear: both; margin-bottom:20px;"
-            share_url="http://projects.latimes.com/value-added/"
-            message="Value-added teacher evaluations"
-            share_type="twitter"
-            twitter_nick="twitter_nick"
-        >
+            <div class="share_button" 
+                style="clear: both; margin-bottom:20px;"
+                share_url="http://developers.facebook.com/docs/reference/plugins/like"
+                share_type="permalink"
+            >
+            </div>
         </div>
     </div>
-
-    <div style="display:block; clear:both;">
-    <h2>Facebook Share</h2>
-
-        <div class="share_button" 
-            style="clear: both; margin-bottom:20px;"
-            share_url="http://projects.latimes.com/value-added/"
-            share_type="facebook"
-        >
-        </div>
-
-        <div class="share_button" 
-            style="clear: both; margin-bottom:20px;"
-            share_url="http://developers.facebook.com/docs/reference/plugins/like"
-            share_type="facebook"
-        >
-        </div>
-
-    </div>
-
-    <div style="display:block; clear:both;">
-    <h2>Link</h2>
-
-        <div class="share_button" 
-            style="clear: both; margin-bottom:20px;"
-            share_url="http://developers.facebook.com/docs/reference/plugins/like"
-            share_type="permalink"
-        >
-        </div>
-    </div>
-
 </body>
 </html>
